@@ -190,10 +190,11 @@ const ButtonContent = styled.div`
 
 const ENSSpan = styled.span`
   font-weight: 600;
+  margin-left: 0.3rem;
 `;
 
 export default function Landing() {
-  const { account, library, chainId } = useWeb3React<Web3Provider>();
+  const { account, library } = useWeb3React<Web3Provider>();
   let history = useHistory();
   const parcelFactoryContract = useContract(
     addresses[RINKEBY_ID].parcelFactory,
@@ -202,20 +203,29 @@ export default function Landing() {
   );
 
   const [parcelOrgAddress, setParcelOrgAddress] = useState('');
-  const [ENSName, setENSName] = useState<string>('');
-  const parcelWalletAddress = addresses[RINKEBY_ID].parcelWallet;
+  const [ENSName, setENSName] = useState('');
 
   useEffect(() => {
     (async () => {
-      if (parcelFactoryContract && account) {
-        let result = await parcelFactoryContract.registered(account);
+      if (parcelFactoryContract && account && library) {
+        let stale = false;
 
-        if (result !== AddressZero) setParcelOrgAddress(result);
+        const result = await parcelFactoryContract.registered(account);
+
+        if (!stale && result !== AddressZero) {
+          setParcelOrgAddress(result);
+          let name = await library.lookupAddress(result);
+          setENSName(name.slice(0, -13));
+        }
+        return (): void => {
+          stale = true;
+          setENSName('');
+        };
       }
     })();
 
     return () => {};
-  }, [parcelFactoryContract, account]);
+  }, [parcelFactoryContract, account, library]);
 
   function login() {
     try {
@@ -225,23 +235,6 @@ export default function Landing() {
       console.error(error);
     }
   }
-
-  useEffect(() => {
-    if (library && account && parcelWalletAddress) {
-      let stale = false;
-      library
-        .lookupAddress(parcelWalletAddress)
-        .then((name) => {
-          if (!stale && typeof name === 'string')
-            setENSName(name.slice(0, -13));
-        })
-        .catch(() => {});
-      return (): void => {
-        stale = true;
-        setENSName('');
-      };
-    }
-  }, [library, account, chainId, parcelWalletAddress]);
 
   return (
     <Box>
