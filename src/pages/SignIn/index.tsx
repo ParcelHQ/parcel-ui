@@ -161,7 +161,7 @@ const ButtonWrapper = styled.div`
   width: 50%;
 `;
 
-const StyledButton = styled.button<{ disabled: boolean }>`
+const StyledButton = styled.button<{ disabled?: boolean }>`
   height: 96px;
   width: auto;
   background: white;
@@ -247,7 +247,7 @@ export default function Landing() {
         <Description>Manage Crypto Payroll Seamlessly</Description>
         <ButtonWrapper>
           <Link to="/create">
-            <StyledButton disabled={!!ENSName} style={{ marginBottom: '1rem' }}>
+            <StyledButton style={{ marginBottom: '1rem' }}>
               <ButtonContent>
                 <Icons.PlusCircle size={15} style={{ marginRight: '0.5rem' }} />
                 Create an Organization

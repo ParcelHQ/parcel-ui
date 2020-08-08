@@ -22,7 +22,6 @@ export default function Organizations() {
     (async () => {
       if (parcelFactoryContract && account) {
         let address = await parcelFactoryContract.registered(account);
-        console.log('address:', address);
 
         let options = [
           { value: 'ocean', label: 'Ocean' },
@@ -38,7 +37,6 @@ export default function Organizations() {
 
   function selected() {
     try {
-      console.log('selectedOption:', selectedOption);
       // history.push('/home');
     } catch (error) {
       console.error(error);

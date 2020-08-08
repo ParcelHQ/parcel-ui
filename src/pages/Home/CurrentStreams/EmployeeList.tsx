@@ -79,7 +79,6 @@ const EmployeeList = ({ employeeStreams }: any) => {
   const STREAMS_PER_PAGE = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const [currentStreams, setCurrentStreams] = useState<any>();
-  console.log('currentStreams:', currentStreams);
   const [pageNumbers, setPageNumbers] = useState<any>();
 
   const tokens = useTokens();

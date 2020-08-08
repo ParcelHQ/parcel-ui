@@ -124,7 +124,6 @@ export default function Add({ areThereEmployees }: any) {
 
   const handleInputChange = (index: any, event: any) => {
     const values = [...inputFields];
-    console.log('values:', values);
 
     if (event.target.name === 'name') {
       values[index].name = event.target.value;

@@ -62,7 +62,6 @@ export default function Payroll() {
             for (let i = 0; i < filesDecrypted.length; i++) {
               newOutcomes.push(filesDecrypted[i]);
             }
-            console.log('newOutcomes:', newOutcomes);
             setOptions(newOutcomes);
           }
         } catch (error) {

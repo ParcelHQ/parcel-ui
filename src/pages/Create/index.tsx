@@ -151,7 +151,7 @@ export default function Create() {
                 <InputGroup>
                   <Input
                     type="text"
-                    placeholder="ETHGlobal"
+                    placeholder="ethglobal"
                     id="validState"
                     name="validState"
                     value={ensName}
@@ -204,7 +204,7 @@ export default function Create() {
         onConfirm={() => setAccountAlreadyRegistered(false)}
       >
         <p className="sweet-alert-text">
-          Current account already has a registered ID
+          Account already has an associated Parcel ID
         </p>
       </SweetAlert>
 

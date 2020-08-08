@@ -18,12 +18,7 @@ const Organizations = lazy(() => import('./pages/Organizations'));
 const Employer = lazy(() => import('./pages/Employer'));
 const Error404 = lazy(() => import('./pages/Error404'));
 
-const AppRoute = ({
-  component: Component,
-  fullLayout,
-  protect,
-  ...rest
-}: any) => (
+const AppRoute = ({ component: Component, fullLayout, ...rest }: any) => (
   <Route
     {...rest}
     render={(props: any) => {

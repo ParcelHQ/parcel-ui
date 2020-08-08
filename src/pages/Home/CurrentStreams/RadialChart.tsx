@@ -95,7 +95,7 @@ export default function RadialChart({ series, totalStreamValue }: any) {
 
             formatter: () => {
               let value = totalStreamValue ? totalStreamValue : 50;
-              console.log('value:', value);
+
               return value;
             },
           },

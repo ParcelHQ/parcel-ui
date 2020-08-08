@@ -49,9 +49,13 @@ export default function ProductOrders() {
   useEffect(() => {
     (async () => {
       if (parcelWalletContract) {
-        const streamIds = await parcelWalletContract.getStreamIds();
+        try {
+          const streamIds = await parcelWalletContract.getStreamIds();
 
-        setStreamIds(streamIds);
+          setStreamIds(streamIds);
+        } catch (error) {
+          console.error(error);
+        }
       }
     })();
   }, [parcelWalletContract]);
