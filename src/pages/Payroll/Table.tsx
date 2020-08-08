@@ -196,7 +196,8 @@ export default function Table() {
         setIsLoading(true);
         toast('Stream Initiated');
 
-        let STREAM_LENGTH_IN_SECONDS = lengthOfStream * 3600;
+        // let STREAM_LENGTH_IN_SECONDS = lengthOfStream * 3600;
+        let STREAM_LENGTH_IN_SECONDS = 60;
 
         let RECEIPIENTS: string[] = [];
         selectedRow.forEach((employee: any) => {

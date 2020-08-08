@@ -41,7 +41,7 @@ export default function ProductOrders() {
   const [streamIds, setStreamIds] = useState<any>();
   const [totalCumulativeStream, setTotalCumulativeStream] = useState(0);
   const [withdrawnAmount, setWithdrawnAmount] = useState(0);
-  const [series, setSeries] = useState([50, 50]); //actual data points used in graph
+  const [series, setSeries] = useState([50, 1]); //actual data points used in graph
   const tokens = useTokens();
   const DAI_ADDRESS = tokens[0][5].address;
   const USDC_ADDRESS = tokens[0][6].address;
@@ -92,8 +92,10 @@ export default function ProductOrders() {
     let percentageString = percentage.toFixed(2);
     percentage = Number(percentageString) * 100;
     percentage = parseInt(percentage.toString());
-
     StreamObject.percentage = percentage;
+    if (percentage > 100 ) {
+        StreamObject.percentage = 100;
+    }
     return StreamObject;
   }
 
@@ -131,7 +133,7 @@ export default function ProductOrders() {
     (async () => {
       if (SablierContract) {
         const STREAMING = 50;
-        const WITHDRAWN = 50;
+        const WITHDRAWN = 0;
         setSeries([STREAMING, WITHDRAWN]);
       }
     })();

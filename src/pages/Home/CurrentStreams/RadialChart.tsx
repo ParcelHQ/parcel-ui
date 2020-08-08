@@ -43,15 +43,16 @@ const Stat = styled.span`
 
 export default function RadialChart({ series, totalStreamValue }: any) {
   if (isNaN(series[0])) series[0] = 50;
+  series[1] = 0;
 
   const [streamedProgress, setStreamedProgress] = useState(50);
-  const [withdrawnProgress, setWithdrawnProgress] = useState(50);
+  const [withdrawnProgress, setWithdrawnProgress] = useState(0);
 
   useEffect(() => {
     if (series) {
-      setStreamedProgress(series[1]);
+      setStreamedProgress(series[0]);
       if (series[2] === !undefined) setWithdrawnProgress(series[2]);
-      else setWithdrawnProgress(50);
+      else setWithdrawnProgress(0);
     }
   }, [series]);
 
@@ -177,7 +178,7 @@ export default function RadialChart({ series, totalStreamValue }: any) {
             <Stat>{`${withdrawnProgress} %`}</Stat>
           </TopBox>
           <div style={{ width: '100px' }}>
-            <Progress animated color="warning" value={streamedProgress} />
+            <Progress animated color="warning" value={0} />
           </div>
         </Box>
       </BottomBox>
