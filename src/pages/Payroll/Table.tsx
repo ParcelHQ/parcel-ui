@@ -257,7 +257,7 @@ export default function Table() {
           STOP_TIME
         );
         await res.wait();
-        window.location.href = '/home';
+        // window.location.href = '/home';
       } catch (error) {
         console.error(error);
       }

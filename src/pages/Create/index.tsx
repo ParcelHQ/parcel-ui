@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Card, CardBody, Row, Col, Form } from 'reactstrap';
+import { Card, CardBody, Form } from 'reactstrap';
 import { keccak256 } from '@ethersproject/keccak256';
 import { toUtf8Bytes } from '@ethersproject/strings';
 import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import namehash from 'eth-ens-namehash';
+import styled from '@emotion/styled';
+import { AddressZero } from '@ethersproject/constants';
 import {
   Button,
   FormGroup,
@@ -25,6 +27,32 @@ import addresses, { RINKEBY_ID } from '../../utility/addresses';
 import { useContract } from '../../hooks';
 import ParcelFactoryContract from '../../abis/ParcelFactory.json';
 
+const Box = styled.div`
+  display: flex;
+  direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const Title = styled.h1`
+  margin: 1rem 0;
+  font-size: 56px;
+`;
+
+const Description = styled.h1`
+  margin: 1rem auto;
+  font-size: 28px;
+  @media (max-width: 768px) {
+    width: 350px;
+  }
+`;
+
+const StyledFormGroup = styled(FormGroup)`
+  max-width: 300px;
+  margin: 0 auto 1rem;
+`;
+
 export default function Create() {
   const { library, account } = useWeb3React<Web3Provider>();
   const parcelFactoryContract = useContract(
@@ -33,15 +61,16 @@ export default function Create() {
     true
   );
 
-  console.log('parcelFactoryContract:', parcelFactoryContract);
-
   const [ensName, setEnsName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const PARCEL_ID_HASH = namehash.hash('parcelid.eth');
-  const [open, setOpen] = useState(false);
   const [invalidState, setInvalidState] = useState(false);
   const [isNowRegistered, setIsNowRegistered] = useState(false);
   const [error, setError] = useState('');
+  const [accountAlreadyRegistered, setAccountAlreadyRegistered] = useState(
+    false
+  );
+  const [idAlreadyTaken, setIdAlreadyTaken] = useState(false);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -63,9 +92,13 @@ export default function Create() {
     const ensFullDomainHash = namehash.hash(ensName + '.parcelid.eth');
 
     if (!!library && !!account && !!parcelFactoryContract) {
-      const doesItExist = await library.resolveName(ensName + '.parcelid.eth');
-      if (doesItExist) setOpen(true);
-      else {
+      const isRegistered = await parcelFactoryContract.registered(account);
+      if (isRegistered !== AddressZero) {
+        setAccountAlreadyRegistered(true);
+        setIsSubmitting(false);
+        setEnsName('');
+        return;
+      } else {
         try {
           await library
             .getSigner(account)
@@ -101,73 +134,57 @@ export default function Create() {
   }
 
   return (
-    <>
-      {isNowRegistered && (
-        <>
-          <Redirect to="/home" /> {toast('Test Funds Added')}
-        </>
-      )}
-      <Row className="m-0">
-        <Col sm="12">
-          <Card className="auth-card bg-transparent shadow-none rounded-0 mb-0 w-100">
-            <CardBody className="text-center">
-              <h1 className="font-large-3 my-1">Register a Name</h1>
-              <h1 className="font-large-1 mt-1 mb-2">Create a Parcel ID</h1>
-              <div
+    <Box>
+      {isNowRegistered && <Redirect to="/home" />}
+
+      <Card className="auth-card bg-transparent shadow-none rounded-0 mb-0 w-100">
+        <CardBody className="text-center">
+          <Title>Register a Name</Title>
+          <Description>Create a Parcel ID</Description>
+
+          {isSubmitting ? (
+            <Spinner type="grow" color="primary" size="lg" />
+          ) : (
+            <Form onSubmit={handleSubmit}>
+              <StyledFormGroup>
+                <Label aria-labelledby="ensName" />
+                <InputGroup>
+                  <Input
+                    type="text"
+                    placeholder="ETHGlobal"
+                    id="validState"
+                    name="validState"
+                    value={ensName}
+                    onChange={(e: any) => setEnsName(e.target.value)}
+                    invalid={invalidState}
+                    required
+                  />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText>@parcelid.eth</InputGroupText>
+                  </InputGroupAddon>
+                  <FormFeedback
+                    style={{ position: 'absolute', marginTop: '3rem' }}
+                  >
+                    {error}
+                  </FormFeedback>
+                </InputGroup>
+              </StyledFormGroup>
+
+              <Button
+                className="my-1"
+                type="submit"
+                color="primary"
+                disabled={isSubmitting}
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: '6rem',
+                  padding: '12px 16px',
                 }}
               >
-                {isSubmitting ? (
-                  <Spinner type="grow" color="primary" size="lg" />
-                ) : (
-                  <Form onSubmit={handleSubmit}>
-                    <FormGroup>
-                      <Label aria-labelledby="ensName" />
-                      <InputGroup>
-                        <Input
-                          type="text"
-                          placeholder="ETHGlobal"
-                          id="validState"
-                          name="validState"
-                          value={ensName}
-                          onChange={(e: any) => setEnsName(e.target.value)}
-                          invalid={invalidState}
-                          required
-                        />
-                        <InputGroupAddon addonType="append">
-                          <InputGroupText>@parcelid.eth</InputGroupText>
-                        </InputGroupAddon>
-                        <FormFeedback
-                          style={{ position: 'absolute', marginTop: '3rem' }}
-                        >
-                          {error}
-                        </FormFeedback>
-                      </InputGroup>
-                    </FormGroup>
-
-                    <Button
-                      className="my-1"
-                      type="submit"
-                      color="primary"
-                      disabled={isSubmitting}
-                      style={{
-                        padding: '12px 16px',
-                      }}
-                    >
-                      Create
-                    </Button>
-                  </Form>
-                )}
-              </div>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+                Create
+              </Button>
+            </Form>
+          )}
+        </CardBody>
+      </Card>
 
       <ToastContainer
         position="top-right"
@@ -182,14 +199,24 @@ export default function Create() {
       />
 
       <SweetAlert
+        title="Account already registered"
+        show={accountAlreadyRegistered}
+        onConfirm={() => setAccountAlreadyRegistered(false)}
+      >
+        <p className="sweet-alert-text">
+          Current account already has a registered ID
+        </p>
+      </SweetAlert>
+
+      <SweetAlert
         title="Name already taken"
-        show={open}
-        onConfirm={() => setOpen(false)}
+        show={idAlreadyTaken}
+        onConfirm={() => setIdAlreadyTaken(false)}
       >
         <p className="sweet-alert-text">
           Please enter in a new name and try again
         </p>
       </SweetAlert>
-    </>
+    </Box>
   );
 }

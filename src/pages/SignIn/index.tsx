@@ -121,18 +121,38 @@ import { useContract } from '../../hooks';
 import addresses, { RINKEBY_ID } from '../../utility/addresses';
 import ParcelFactoryContract from '../../abis/ParcelFactory.json';
 import Logo from '../../assets/img/logo/logoPng.png';
-import SweetAlert from 'react-bootstrap-sweetalert';
 import { Link } from 'react-router-dom';
+
+const ParcelLogo = styled.img`
+  height: 8rem;
+`;
 
 const Box = styled.div`
   display: flex;
   direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+`;
+
+const Title = styled.h1`
+  margin: 1rem 0;
+  font-size: 64px;
+`;
+
+const Description = styled.h1`
+  margin: 1rem auto;
+  font-size: 32px;
+  @media (max-width: 768px) {
+    width: 350px;
+  }
+`;
+
+const ColoredSpan = styled.span`
+  color: #6f6be9;
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 3rem;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
@@ -161,9 +181,19 @@ const StyledButton = styled.button<{ disabled: boolean }>`
   }
 `;
 
-export default function Landing() {
-  const { active, account, library, chainId } = useWeb3React<Web3Provider>();
+const ButtonContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+`;
 
+const ENSSpan = styled.span`
+  font-weight: 600;
+`;
+
+export default function Landing() {
+  const { account, library, chainId } = useWeb3React<Web3Provider>();
   let history = useHistory();
   const parcelFactoryContract = useContract(
     addresses[RINKEBY_ID].parcelFactory,
@@ -171,19 +201,16 @@ export default function Landing() {
     true
   );
 
-  const [accountAvailable, setAccountAvailable] = useState(false);
   const [parcelOrgAddress, setParcelOrgAddress] = useState('');
-  const [noAccountAlert, setNoAccountAlert] = useState(false);
+  const [ENSName, setENSName] = useState<string>('');
+  const parcelWalletAddress = addresses[RINKEBY_ID].parcelWallet;
 
   useEffect(() => {
     (async () => {
       if (parcelFactoryContract && account) {
         let result = await parcelFactoryContract.registered(account);
 
-        if (result !== AddressZero) {
-          setAccountAvailable(true);
-          setParcelOrgAddress(result);
-        } else setAccountAvailable(false);
+        if (result !== AddressZero) setParcelOrgAddress(result);
       }
     })();
 
@@ -192,19 +219,12 @@ export default function Landing() {
 
   function login() {
     try {
-      if (!accountAvailable) setNoAccountAlert(true);
-      else {
-        localStorage.setItem('PARCEL_WALLET_ADDRESS', parcelOrgAddress);
-        history.push('/home');
-      }
+      localStorage.setItem('PARCEL_WALLET_ADDRESS', parcelOrgAddress);
+      history.push('/home');
     } catch (error) {
       console.error(error);
     }
   }
-
-  const [ENSName, setENSName] = useState<string>('');
-
-  const parcelWalletAddress = addresses[RINKEBY_ID].parcelWallet;
 
   useEffect(() => {
     if (library && account && parcelWalletAddress) {
@@ -212,9 +232,8 @@ export default function Landing() {
       library
         .lookupAddress(parcelWalletAddress)
         .then((name) => {
-          if (!stale && typeof name === 'string') {
+          if (!stale && typeof name === 'string')
             setENSName(name.slice(0, -13));
-          }
         })
         .catch(() => {});
       return (): void => {
@@ -226,38 +245,30 @@ export default function Landing() {
 
   return (
     <Box>
-      <CardBody className="text-center">
-        <img
-          src={Logo}
-          alt="Parcel Logo"
-          className="img-fluid align-self-center"
-          style={{ height: '8rem' }}
-        />
+      <CardBody>
+        <ParcelLogo src={Logo} alt="Parcel Logo" />
 
-        <h1 className="font-large-3 my-1">
-          Welcome to <span style={{ color: '#6F6BE9' }}>Parcel</span>
-        </h1>
-        <h1 className="font-large-1 my-1">Manage Crypto Payroll Seamlessly</h1>
+        <Title>
+          Welcome to <ColoredSpan>Parcel</ColoredSpan>
+        </Title>
+        <Description>Manage Crypto Payroll Seamlessly</Description>
         <ButtonWrapper>
           <Link to="/create">
             <StyledButton disabled={!!ENSName} style={{ marginBottom: '1rem' }}>
-              <Icons.PlusCircle size={15} style={{ marginRight: '0.5rem' }} />
-              Create an Organization
+              <ButtonContent>
+                <Icons.PlusCircle size={15} style={{ marginRight: '0.5rem' }} />
+                Create an Organization
+              </ButtonContent>
             </StyledButton>
           </Link>
 
           <StyledButton disabled={ENSName === ''} onClick={() => login()}>
-            <Icons.Search size={15} style={{ marginRight: '0.5rem' }} />
-            Login {`${ENSName}`}
+            <ButtonContent>
+              <Icons.Search size={15} style={{ marginRight: '0.5rem' }} />
+              Login <ENSSpan>{`${ENSName}`}</ENSSpan>
+            </ButtonContent>
           </StyledButton>
         </ButtonWrapper>
-        {/* <SweetAlert
-          title="No Available Account"
-          show={noAccountAlert}
-          onConfirm={() => setNoAccountAlert(false)}
-        >
-          <p className="sweet-alert-text">Have you registered a Parcel ID?</p>
-        </SweetAlert> */}
       </CardBody>
     </Box>
   );
