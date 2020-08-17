@@ -127,7 +127,7 @@ export default function Documents() {
           );
 
           await result.wait();
-          // window.location.href = '';
+          window.location.href = '';
         } else {
           let documentsData = [];
           let file = acceptedFiles[0];
@@ -155,7 +155,7 @@ export default function Documents() {
           );
 
           await result.wait();
-          // window.location.href = '';
+          window.location.href = '';
         }
       } catch (error) {
         console.error(error);

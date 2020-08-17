@@ -142,7 +142,7 @@ export default function ProductOrders() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Current Streams</CardTitle>
+        <CardTitle>Streams</CardTitle>
         {/* <UncontrolledDropdown>
           <DropdownToggle tag="small" className="text-bold-500 cursor-pointer">
             All <ChevronDown size={10} />

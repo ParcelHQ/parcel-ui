@@ -196,8 +196,8 @@ export default function Table() {
         setIsLoading(true);
         toast('Stream Initiated');
 
-        // let STREAM_LENGTH_IN_SECONDS = lengthOfStream * 3600;
-        let STREAM_LENGTH_IN_SECONDS = 60;
+        let STREAM_LENGTH_IN_SECONDS = lengthOfStream * 3600;
+        // let STREAM_LENGTH_IN_SECONDS = 60;
 
         let RECEIPIENTS: string[] = [];
         selectedRow.forEach((employee: any) => {
@@ -258,7 +258,7 @@ export default function Table() {
           STOP_TIME
         );
         await res.wait();
-        // window.location.href = '/home';
+        window.location.href = '/home';
       } catch (error) {
         console.error(error);
       }
