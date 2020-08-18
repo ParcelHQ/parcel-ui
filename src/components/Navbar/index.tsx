@@ -101,7 +101,7 @@ export default function ThemeNavbar({
                         {/* <IDWrapper>
                           {ENSName && (
                             <Badge className="badge-lg" color="primary">
-                              <span>{`Welcome back,  ${ENSName}!`}</span>
+                              <span>{`Welcome,  ${ENSName}!`}</span>
                             </Badge>
                           )}
                         </IDWrapper> */}
@@ -111,7 +111,7 @@ export default function ThemeNavbar({
                   <IDWrapper>
                     {ENSName && (
                       <Badge className="badge-lg" color="primary">
-                        <span>{`Welcome back,  ${ENSName}!`}</span>
+                        <span>{`Welcome,  ${ENSName}!`}</span>
                       </Badge>
                     )}
                   </IDWrapper>
