@@ -2,7 +2,16 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
 import ReactTable from 'react-table';
 
-export default function Table({ data }: any) {
+let data = [
+  {
+    date: "20 Aug, 2020",
+    receiver : "0x886d8Ea2....1ad3075c1a",
+    remarks : "Salary Paid",
+    amount : "300 DAI"
+  }
+];
+
+export default function Table() {
   return (
     <Card>
       <CardHeader>
@@ -10,29 +19,33 @@ export default function Table({ data }: any) {
       </CardHeader>
       <CardBody>
         {/* @ts-ignore */}
-        <ReactTable
-          data={data}
-          columns={[
-            {
-              Header: 'Date',
-              accessor: 'date',
-            },
-            {
-              Header: 'Receiver',
-              accessor: 'receiver',
-            },
-            {
-              Header: 'Remarks',
-              id: 'remarks',
-            },
-            {
-              Header: 'Amount',
-              id: 'amount',
-            },
-          ]}
-          defaultPageSize={10}
-          className="-striped -highlight"
-        />
+        <Table
+          responsive
+          className="dashboard-table table-hover-animation mb-0 mt-1"
+        >
+          <thead>
+            <tr>
+              <th>DATE</th>
+              <th>AMOUNT</th>
+              <th>RECEIVER</th>
+              <th>REMARKS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>28/07/2018</td>
+              <td>$2500</td>
+              <td>Brennan.eth</td>
+              <td>Paid Contractor Brennan Fife $545</td>
+            </tr>
+            <tr>
+              <td>28/07/2018</td>
+              <td>$2500</td>
+              <td>BrennanFife.eth</td>
+              <td>Brennan Fife is requesting $324</td>
+            </tr>
+          </tbody>
+        </Table>
       </CardBody>
     </Card>
   );

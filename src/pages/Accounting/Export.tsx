@@ -202,7 +202,51 @@ export default function Export() {
                         <th>Amount</th>
                       </tr>
                     </thead>
-                    <tbody>{renderTableData}</tbody>
+                    <tbody>
+                    <tr>
+                      <td>28/07/2020</td>
+                      <td>Brennan.eth</td>
+                      <td>Salary paid successfully</td>
+                      <td>$2500</td>
+                    </tr>
+                    <tr>
+                      <td>28/07/2020</td>
+                      <td>tarun.eth</td>
+                      <td>Salary paid successfully</td>
+                      <td>$2500</td>
+                    </tr>
+
+                    <tr>
+                      <td>28/08/2020</td>
+                      <td>ben.eth</td>
+                      <td>Salary paid successfully</td>
+                      <td>$2500</td>
+                    </tr>
+                    <tr>
+                      <td>28/08/2020</td>
+                      <td>ben.eth</td>
+                      <td>Salary paid successfully</td>
+                      <td>$2500</td>
+                    </tr>
+                    <tr>
+                      <td>28/08/2020</td>
+                      <td>ben.eth</td>
+                      <td>Salary paid successfully</td>
+                      <td>$2500</td>
+                    </tr>
+                    <tr>
+                      <td>28/08/2020</td>
+                      <td>ben.eth</td>
+                      <td>Salary paid successfully</td>
+                      <td>$2500</td>
+                    </tr>
+                    <tr>
+                      <td>28/08/2020</td>
+                      <td>ben.eth</td>
+                      <td>Salary paid successfully</td>
+                      <td>$2500</td>
+                    </tr>
+                    </tbody>
                   </Table>
                 </Col>
               </Row>

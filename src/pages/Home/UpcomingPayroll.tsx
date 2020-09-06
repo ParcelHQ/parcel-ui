@@ -16,18 +16,38 @@ export default function UpcomingPayroll() {
                 <Plus size={16} />
               </div>
               <div className="timeline-info">
-                <p className="font-weight-bold mb-0">Payment Requested</p>
-                <span className="font-small-3">Lorem Ipsum</span>
+                <p className="font-weight-bold mb-0">Engineering Team Payroll</p>
+                <span className="font-small-3">$50K</span>
               </div>
-              <small className="text-muted">In 3 Hours</small>
+              <small className="text-muted">3rd Aug, 2020</small>
             </li>
             <li>
               <div className="timeline-icon bg-primary">
                 <AlertCircle size={16} />
               </div>
               <div className="timeline-info">
-                <p className="font-weight-bold mb-0">Payment Requested</p>
-                <span className="font-small-3">Lorem Ipsum</span>
+                <p className="font-weight-bold mb-0">Finance Team Payroll</p>
+                <span className="font-small-3">$100K</span>
+              </div>
+              <small className="text-muted">In 15 days</small>
+            </li>
+            <li>
+              <div className="timeline-icon bg-primary">
+                <AlertCircle size={16} />
+              </div>
+              <div className="timeline-info">
+                <p className="font-weight-bold mb-0">Finance Team Payroll</p>
+                <span className="font-small-3">$100K</span>
+              </div>
+              <small className="text-muted">In 15 days</small>
+            </li>
+            <li>
+              <div className="timeline-icon bg-primary">
+                <AlertCircle size={16} />
+              </div>
+              <div className="timeline-info">
+                <p className="font-weight-bold mb-0">Finance Team Payroll</p>
+                <span className="font-small-3">$100K</span>
               </div>
               <small className="text-muted">In 15 days</small>
             </li>
