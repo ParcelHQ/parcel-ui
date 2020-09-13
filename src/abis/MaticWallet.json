@@ -1,0 +1,96 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "signer",
+				"type": "address"
+			},
+			{
+				"components": [
+					{
+						"internalType": "bytes32",
+						"name": "r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "s",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint8",
+						"name": "v",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct ParcelMeta.Signature",
+				"name": "signature",
+				"type": "tuple"
+			},
+			{
+				"internalType": "uint8",
+				"name": "index",
+				"type": "uint8"
+			},
+			{
+				"internalType": "string",
+				"name": "hash",
+				"type": "string"
+			}
+		],
+		"name": "addFile",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"name": "files",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "nonces",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

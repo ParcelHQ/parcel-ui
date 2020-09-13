@@ -17,6 +17,7 @@ export default {
     parcelWallet:
       getParcelWalletAddress() || '0xc2daeC47fbE026550c4F3f6C35d300C37b8aF361', //TODO: change this to global address when created
     massPayouts: '0x9244fB7C104c09de4D5B7D41ce151ad29c837Ce4',
+    maticWallet : '0x5E4FA2B8b3b90Bd1EC190d5C72A3A1B272d3985F',
     tokens: {
       DAI: '0xc3dbf84Abb494ce5199D5d4D815b10EC29529ff8',
       WETH: '0xc778417e063141139fce010982780140aa0cd5ab',
